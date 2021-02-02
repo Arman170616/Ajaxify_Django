@@ -1,3 +1,5 @@
-var x;
-x = prompt("enter your name");
-document.write(x);
+let a;
+let b=a;
+a =90;
+document.write(b);
+ 
