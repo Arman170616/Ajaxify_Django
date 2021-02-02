@@ -1,25 +1,27 @@
+document.getElementById('get_data').addEventListener('click', loadJokes);
 
-document.getElementById("get_data").addEventListener('click', loadData);
+function loadJokes(e){
 
-function loadData(){
-   // console.log("Button clicked!");
+    let number =  document.getElementById('numbersJokes').value;
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `http://api.icndb.com/jokes/random/${number}`, true);
 
-   //create XHR Object(Xml Http Request)
-   let xhr = new XMLHttpRequest();
+    xhr.onload = function(){
+        if(this.status === 200){
+           let data = JSON.parse(this.responseText);
+           let jokes = data.value;
+           let output = "<ol>";
 
+            jokes.forEach(function(item){
+                output += `<li>${item.joke}</li>`;
+            });
 
-   // xhr open
-   xhr.open('GET', 'data.txt', true);
+           output += "</ol>";
 
-   xhr.onload = function(){
-       if (this.status === 200){
-
-        document.getElementById('output').innerHTML=`<h4>${this.responseText}</h4>`
-       }
-   }
-
-   xhr.send();
-
-  // console.log(xhr);
-   
+           document.getElementById('output').innerHTML=output;
+          
+          
+        }
+    }
+    xhr.send();
 }
